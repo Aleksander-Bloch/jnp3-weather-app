@@ -1,12 +1,14 @@
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { useSelector } from "react-redux";
 import { usersGeolocationSelector } from "../../geolocation/selectors.js";
+import { ChangeView } from "./ChangeView.jsx";
 
-export const Map = () => {
+export const WeatherMap = () => {
   const { latitude, longitude } = useSelector(usersGeolocationSelector)
 
   return (
-    <MapContainer id="map" center={[latitude, longitude]} zoom={13} scrollWheelZoom={false}>
+    <MapContainer id="map" center={[latitude, longitude]} zoom={6} scrollWheelZoom={false}>
+      <ChangeView center={[latitude, longitude]} />
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
