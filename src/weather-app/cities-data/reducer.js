@@ -1,5 +1,4 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
-import { getWeatherNiceness } from "./utils.js";
 
 export const CITIES_DATA_REDUCER_NAME = 'citiesData'
 
