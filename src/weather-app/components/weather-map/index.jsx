@@ -1,18 +1,22 @@
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { useSelector } from "react-redux";
-import { usersGeolocationSelector } from "../../geolocation/selectors.js";
 import { ChangeView } from "./ChangeView.jsx";
 import { citiesDataSelector } from "../../cities-data/selectors.js";
 import { WEATHER_ATTRIBUTES } from "../../cities-data/const.js";
 import { getWeatherNiceness } from "../../cities-data/utils.js";
+import { CenterButton } from "./CenterButton.jsx";
 
 export const WeatherMap = () => {
-  const { latitude, longitude } = useSelector(usersGeolocationSelector)
   const citiesData = useSelector(citiesDataSelector)
+  console.log('WeatherMap')
 
   return (
-    <MapContainer id="map" center={[latitude, longitude]} zoom={6} scrollWheelZoom={false}>
-      <ChangeView center={[latitude, longitude]} />
+    <MapContainer id="map" center={[0, 0]} zoom={6} scrollWheelZoom={false}
+                  whenReady={({ target: map }) => {
+                    map.locate()
+                  }}>
+      <ChangeView/>
+      <CenterButton/>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

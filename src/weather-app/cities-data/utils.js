@@ -4,7 +4,8 @@ import {
   OVERPASS_API_URL,
   WEATHER_API_KEY,
   WEATHER_API_URL,
-  WEATHER_NICE, WEATHER_NOT_NICE,
+  WEATHER_NICE,
+  WEATHER_NOT_NICE,
   WEATHER_PASSABLE
 } from "./const.js";
 
@@ -19,9 +20,11 @@ export const requestDataForCitiesWithinBounds = ({ south, west, north, east }) =
 }
 
 export const compareCitiesByPopulationDesc = (c1, c2) => {
-  if (c1.tags.population > c2.tags.population) {
+  const pop1 = Number(c1.tags.population)
+  const pop2 = Number(c2.tags.population)
+  if (pop1 > pop2) {
     return -1
-  } else if (c2.tags.population < c2.tags.population) {
+  } else if (pop1 < pop2) {
     return 1
   }
   return 0

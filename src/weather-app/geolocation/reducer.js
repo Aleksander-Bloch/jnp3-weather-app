@@ -1,4 +1,4 @@
-import { createAction, createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 export const GEOLOCATION_REDUCER_NAME = 'geolocation'
 
@@ -18,8 +18,6 @@ export const geolocationSlice = createSlice({
     },
   },
 })
-
-export const centerMapRequest = createAction(`${GEOLOCATION_REDUCER_NAME}/centerMapRequest`)
 
 export const { updateUsersGeolocation } = geolocationSlice.actions
 
