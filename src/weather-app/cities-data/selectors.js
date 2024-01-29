@@ -7,3 +7,8 @@ export const citiesDataSelector = createSelector(
   selectCitiesDataState,
   ({ citiesData }) => citiesData
 )
+
+export const isDataLoadingSelector = createSelector(
+  selectCitiesDataState,
+  ({ isDataLoading }) => isDataLoading
+)

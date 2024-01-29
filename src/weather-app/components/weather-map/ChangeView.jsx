@@ -15,7 +15,6 @@ export function ChangeView() {
       dispatch(updateUsersGeolocation(locationPayload))
     },
     moveend: () => {
-      console.log('ChangeView')
       const bounds = map.getBounds()
       const boundsPayload = {
         south: bounds.getSouth(),
@@ -24,7 +23,6 @@ export function ChangeView() {
         east: bounds.getEast(),
       }
       dispatch(changeMapViewRequest(boundsPayload))
-      console.log(map.getBounds())
     }
   })
   return null
