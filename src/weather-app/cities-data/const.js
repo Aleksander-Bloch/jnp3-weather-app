@@ -5,7 +5,7 @@ export const MAX_CITIES = 5
 
 export const CITIES_DATA_DOWNLOAD_DEBOUNCE_TIME_IN_MS = 5000
 
-export const CITIES_DATA_REFRESH_INTERVAL_IN_MS = 20_000
+export const CITIES_DATA_REFRESH_INTERVAL_IN_MS = 60 * 60 * 1000
 
 export const NICE_TEMP_RANGE = {
   min: 18,

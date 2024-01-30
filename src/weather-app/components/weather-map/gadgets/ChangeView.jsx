@@ -1,9 +1,9 @@
 import { useMapEvents } from "react-leaflet";
 import { useDispatch } from "react-redux";
-import { changeMapViewRequest } from "../../cities-data/reducer.js";
-import { updateUsersGeolocation } from "../../geolocation/reducer.js";
+import { changeMapViewRequest } from "../../../cities-data/reducer.js";
+import { updateUsersGeolocation } from "../../../geolocation/reducer.js";
 
-export function ChangeView() {
+export const ChangeView = () => {
   const dispatch = useDispatch()
   const map = useMapEvents({
     locationfound: (e) => {

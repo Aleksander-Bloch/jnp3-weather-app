@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { usersGeolocationSelector } from "../../geolocation/selectors.js";
+import { usersGeolocationSelector } from "../../../geolocation/selectors.js";
 import { useMap } from "react-leaflet";
 
 export const CenterButton = () => {
