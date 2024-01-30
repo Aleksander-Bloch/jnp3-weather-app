@@ -1,0 +1,1 @@
+export const isDefined = (element) => element !== undefined && element !== null

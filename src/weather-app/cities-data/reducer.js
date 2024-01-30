@@ -11,8 +11,8 @@ export const citiesDataSlice = createSlice({
   name: CITIES_DATA_REDUCER_NAME,
   initialState,
   reducers: {
-    updateCitiesData: (state, { payload }) => {
-      state.citiesData = payload
+    updateCitiesData: (state, { payload: citiesData }) => {
+      state.citiesData = citiesData
       state.isDataLoading = false
     },
     setLoadingState: (state) => {

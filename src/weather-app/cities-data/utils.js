@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  MAX_CITIES,
   NICE_TEMP_RANGE,
   OVERPASS_API_URL,
   WEATHER_API_KEY,
@@ -8,6 +9,8 @@ import {
   WEATHER_NOT_NICE,
   WEATHER_PASSABLE
 } from "./const.js";
+import { forkJoin, from, map } from "rxjs";
+import { isDefined } from "../../utils.js";
 
 export const requestDataForCitiesWithinBounds = ({ south, west, north, east }) => {
   const query = `
@@ -30,10 +33,6 @@ export const compareCitiesByPopulationDesc = (c1, c2) => {
   return 0
 }
 
-export const requestWeatherDataForGeolocation = (lat, lon) => (
-  axios.get(`${WEATHER_API_URL}?q=${lat},${lon}&key=${WEATHER_API_KEY}`)
-)
-
 export const getWeatherNiceness = (precip_mm, temp_c) => {
   if (isWeatherNice(precip_mm, temp_c)) {
     return WEATHER_NICE
@@ -43,6 +42,59 @@ export const getWeatherNiceness = (precip_mm, temp_c) => {
     return WEATHER_NOT_NICE
   }
 }
+
+export const createDataForCitiesWithinBounds = (bounds) => (
+  from(requestDataForCitiesWithinBounds(bounds)).pipe(
+    map((response) => response.data.elements
+      .filter((city) => isDefined(city.tags.population))
+      .sort(compareCitiesByPopulationDesc)
+      .slice(0, MAX_CITIES)
+      .map((city) => ({
+        id: city.id,
+        lat: city.lat,
+        lon: city.lon,
+        name: city.tags.name,
+        population: city.tags.population
+      }))
+    ),
+  )
+)
+
+export const updateCitiesDataWithWeatherDataWithCaching = (fetchedCities, knownCities) => (
+  forkJoin(
+    fetchedCities
+      .filter((fetchedCity) => !knownCities.some((knownCity) => knownCity.id === fetchedCity.id))
+      .map((newCity) => updateCityDataWithWeatherData(newCity))
+  ).pipe(
+    map((updatedNewCitiesData) => updatedNewCitiesData.concat(
+      knownCities.filter((knownCity) => fetchedCities.some((fetchedCity) => fetchedCity.id === knownCity.id))
+    ))
+  )
+)
+
+export const updateCitiesDataWithWeatherData = (cities) => (
+  forkJoin(
+    cities.map((newCity) => updateCityDataWithWeatherData(newCity))
+  )
+)
+
+const updateCityDataWithWeatherData = (city) => (
+  from(requestWeatherDataForGeolocation(city.lat, city.lon)).pipe(
+    map((response) => response.data.current),
+    map((currentWeather) => ({
+      ...city,
+      weather: {
+        precip_mm: currentWeather.precip_mm,
+        temp_c: currentWeather.temp_c,
+        icon: currentWeather.condition.icon,
+      }
+    }))
+  )
+)
+
+const requestWeatherDataForGeolocation = (lat, lon) => (
+  axios.get(`${WEATHER_API_URL}?q=${lat},${lon}&key=${WEATHER_API_KEY}`)
+)
 
 const isWeatherNice = (precip_mm, temp_c) => (
   precip_mm === 0 && temp_c >= NICE_TEMP_RANGE.min && temp_c <= NICE_TEMP_RANGE.max
