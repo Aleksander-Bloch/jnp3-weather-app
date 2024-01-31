@@ -9,7 +9,7 @@ import {
   WEATHER_NOT_NICE,
   WEATHER_PASSABLE
 } from "./const.js";
-import { forkJoin, from, map } from "rxjs";
+import { defaultIfEmpty, forkJoin, from, map } from "rxjs";
 import { isDefined } from "../../utils.js";
 
 export const requestDataForCitiesWithinBounds = ({ south, west, north, east }) => {
@@ -54,7 +54,7 @@ export const createDataForCitiesWithinBounds = (bounds) => (
         lat: city.lat,
         lon: city.lon,
         name: city.tags.name,
-        population: city.tags.population
+        population: Number(city.tags.population)
       }))
     ),
   )
@@ -66,6 +66,7 @@ export const updateCitiesDataWithWeatherDataWithCaching = (fetchedCities, knownC
       .filter((fetchedCity) => !knownCities.some((knownCity) => knownCity.id === fetchedCity.id))
       .map((newCity) => updateCityDataWithWeatherData(newCity))
   ).pipe(
+    defaultIfEmpty([]),
     map((updatedNewCitiesData) => updatedNewCitiesData.concat(
       knownCities.filter((knownCity) => fetchedCities.some((fetchedCity) => fetchedCity.id === knownCity.id))
     ))
@@ -75,6 +76,8 @@ export const updateCitiesDataWithWeatherDataWithCaching = (fetchedCities, knownC
 export const updateCitiesDataWithWeatherData = (cities) => (
   forkJoin(
     cities.map((newCity) => updateCityDataWithWeatherData(newCity))
+  ).pipe(
+    defaultIfEmpty([])
   )
 )
 
