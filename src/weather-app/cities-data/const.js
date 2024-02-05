@@ -20,14 +20,17 @@ export const WEATHER_NOT_NICE = 'not_nice'
 export const WEATHER_ATTRIBUTES = {
   [WEATHER_NICE]: {
     text: 'Nice',
-    emoji: '🤠'
+    emoji: '🤠',
+    color: '#55d555',
   },
   [WEATHER_PASSABLE]: {
     text: 'Passable',
-    emoji: '😑'
+    emoji: '😑',
+    color: '#ff9a57',
   },
   [WEATHER_NOT_NICE]: {
     text: 'Not Nice',
-    emoji: '🙁'
+    emoji: '🙁',
+    color: '#be3838'
   }
 }
