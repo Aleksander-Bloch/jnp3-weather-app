@@ -22,11 +22,8 @@ export const citiesDataSlice = createSlice({
     setLoadingState: (state) => {
       state.isDataLoading = true
     },
-    updateCityNameFilter: (state, { payload }) => {
-      state.filters.cityName = payload.cityName
-    },
-    updateMinPopulationFilter: (state, { payload }) => {
-      state.filters.minPopulation = payload.minPopulation
+    updateFilters: (state, { payload: filters }) => {
+      state.filters = filters
     },
   }
 })
@@ -36,8 +33,7 @@ export const changeMapViewRequest = createAction(`${CITIES_DATA_REDUCER_NAME}/ch
 export const {
   updateCitiesData,
   setLoadingState,
-  updateCityNameFilter,
-  updateMinPopulationFilter
+  updateFilters
 } = citiesDataSlice.actions
 
 export const citiesDataReducer = citiesDataSlice.reducer

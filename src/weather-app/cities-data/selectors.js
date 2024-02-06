@@ -1,7 +1,7 @@
 import { CITIES_DATA_REDUCER_NAME } from "./reducer.js";
 import { createSelector } from "@reduxjs/toolkit";
-import { WEATHER_NICE, WEATHER_NOT_NICE, WEATHER_PASSABLE } from "./const.js";
-import { getWeatherNiceness } from "./utils.js";
+import { PRESSURE_DIST_RANGES, TEMP_DIST_RANGES, WEATHER_NICE, WEATHER_NOT_NICE, WEATHER_PASSABLE } from "./const.js";
+import { getRangeLabel, getWeatherNiceness } from "./utils.js";
 
 export const selectCitiesDataState = (state) => state[CITIES_DATA_REDUCER_NAME]
 
@@ -20,26 +20,25 @@ export const filtersSelector = createSelector(
   ({ filters }) => filters
 )
 
-export const cityNameFilterSelector = createSelector(
-  filtersSelector,
-  ({ cityName }) => cityName
-)
-
-export const minPopulationFilterSelector = createSelector(
-  filtersSelector,
-  ({ minPopulation }) => minPopulation
-)
-
 export const filteredCitiesDataSelector = createSelector(
   citiesDataSelector,
-  cityNameFilterSelector,
-  minPopulationFilterSelector,
-  (citiesData, cityNameFilter, minPopulationFilter) => citiesData.filter((cityData) => cityData.name.toLowerCase().includes(cityNameFilter.toLowerCase()) && cityData.population >= minPopulationFilter)
+  filtersSelector,
+  (citiesData, filters) => (
+    citiesData.filter((cityData) => {
+      const cityName = cityData.name.toLowerCase()
+      const cityNameFilter = filters.cityName.trim().toLowerCase()
+      return cityName.includes(cityNameFilter) && cityData.population >= filters.minPopulation
+    })
+  )
 )
 
 export const nicenessDistributionSelector = createSelector(
-  citiesDataSelector,
+  filteredCitiesDataSelector,
   (citiesData) => {
+    if (citiesData.length === 0) {
+      return null
+    }
+
     const initialDist = {
       [WEATHER_NICE]: { count: 0, percent: 0.0 },
       [WEATHER_PASSABLE]: { count: 0, percent: 0.0 },
@@ -60,5 +59,46 @@ export const nicenessDistributionSelector = createSelector(
     }
 
     return nicenessDistribution
+  }
+)
+
+export const temperatureDistributionSelector = createSelector(
+  filteredCitiesDataSelector,
+  (citiesData) => {
+    if (citiesData.length === 0) {
+      return null
+    }
+
+    const initialDist = TEMP_DIST_RANGES.reduce((dist, tempDistRange) => {
+      dist[tempDistRange.label] = 0
+      return dist
+    }, {})
+
+
+    return citiesData.reduce((dist, cityData) => {
+      const tempRangeLabel = getRangeLabel(cityData.weather.temp_c, TEMP_DIST_RANGES)
+      dist[tempRangeLabel]++
+      return dist
+    }, initialDist)
+  }
+)
+
+export const pressureDistributionSelector = createSelector(
+  filteredCitiesDataSelector,
+  (citiesData) => {
+    if (citiesData.length === 0) {
+      return null
+    }
+
+    const initialDist = PRESSURE_DIST_RANGES.reduce((dist, pressureDistRange) => {
+      dist[pressureDistRange.label] = 0
+      return dist
+    }, {})
+
+    return citiesData.reduce((dist, cityData) => {
+      const pressureRangeLabel = getRangeLabel(cityData.weather.pressure_mb, PRESSURE_DIST_RANGES)
+      dist[pressureRangeLabel]++
+      return dist
+    }, initialDist)
   }
 )
