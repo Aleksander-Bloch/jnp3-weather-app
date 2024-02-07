@@ -2,7 +2,7 @@ import axios from "axios";
 import {
   MAX_CITIES,
   NICE_TEMP_RANGE,
-  OVERPASS_API_URL, TEMP_DIST_RANGES,
+  OVERPASS_API_URL,
   WEATHER_API_KEY,
   WEATHER_API_URL,
   WEATHER_NICE,
@@ -48,29 +48,6 @@ export const getRangeLabel = (value, distRanges) => (
     value >= distRange.range[0] && value <= distRange.range[1] ? distRange.label : label
   ), '')
 )
-
-export const createDistRanges = (min, max, numRanges) => {
-  if (min >= max) {
-    throw new Error(`min: ${min} >= max: ${max}`)
-  }
-  if (numRanges < 2) {
-    throw new Error(`Number of ranges has to be at least 2 (got ${numRanges})`)
-  }
-  const step = (max - min) / numRanges
-  const distRanges = []
-  let currentStart = min
-  distRanges.push({ range: [Number.NEGATIVE_INFINITY, min - Number.MIN_VALUE], label: `< ${min}` })
-  for (let i = 0; i < numRanges; i++) {
-    distRanges.push({
-      range: [currentStart, currentStart + step - Number.MIN_VALUE],
-      label: `[${currentStart.toFixed(1)}, ${(currentStart + step).toFixed(1)})`
-    })
-    currentStart += step
-  }
-  distRanges.push({ range: [max, Number.POSITIVE_INFINITY], label: `≥ ${max}` })
-
-  return distRanges
-}
 
 export const createDataForCitiesWithinBounds = (bounds) => (
   from(requestDataForCitiesWithinBounds(bounds)).pipe(

@@ -1,14 +1,14 @@
-import { NicenessChart } from "./niceness-chart/index.jsx";
-import { TemperatureHistogram } from "./histograms/temperature-histogram/index.jsx";
-import { PressureHistogram } from "./histograms/pressure-histogram/index.jsx";
+import { NicenessDistributionChart } from "./niceness-distribution-chart/index.jsx";
+import { TemperatureDistributionChart } from "./temperature-distribution-chart/index.jsx";
+import { PressureDistributionChart } from "./pressure-distribution-chart/index.jsx";
 
 export const ChartsPanel = () => {
 
   return (
     <>
-      <NicenessChart/>
-      <TemperatureHistogram/>
-      <PressureHistogram/>
+      <NicenessDistributionChart/>
+      <TemperatureDistributionChart/>
+      <PressureDistributionChart/>
     </>
   )
 }

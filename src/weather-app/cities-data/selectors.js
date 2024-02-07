@@ -1,7 +1,7 @@
 import { CITIES_DATA_REDUCER_NAME } from "./reducer.js";
 import { createSelector } from "@reduxjs/toolkit";
-import { PRESSURE_DIST_RANGES, TEMP_DIST_RANGES, WEATHER_NICE, WEATHER_NOT_NICE, WEATHER_PASSABLE } from "./const.js";
-import { getRangeLabel, getWeatherNiceness } from "./utils.js";
+import { WEATHER_NICE, WEATHER_NOT_NICE, WEATHER_PASSABLE } from "./const.js";
+import { getWeatherNiceness } from "./utils.js";
 
 export const selectCitiesDataState = (state) => state[CITIES_DATA_REDUCER_NAME]
 
@@ -64,41 +64,16 @@ export const nicenessDistributionSelector = createSelector(
 
 export const temperatureDistributionSelector = createSelector(
   filteredCitiesDataSelector,
-  (citiesData) => {
-    if (citiesData.length === 0) {
-      return null
-    }
-
-    const initialDist = TEMP_DIST_RANGES.reduce((dist, tempDistRange) => {
-      dist[tempDistRange.label] = 0
-      return dist
-    }, {})
-
-
-    return citiesData.reduce((dist, cityData) => {
-      const tempRangeLabel = getRangeLabel(cityData.weather.temp_c, TEMP_DIST_RANGES)
-      dist[tempRangeLabel]++
-      return dist
-    }, initialDist)
-  }
+  (citiesData) => (
+    citiesData.map((cityData) => ({ name: cityData.name, value: cityData.weather.temp_c }))
+      .sort((c1, c2) => c1.value - c2.value)
+  )
 )
 
 export const pressureDistributionSelector = createSelector(
   filteredCitiesDataSelector,
-  (citiesData) => {
-    if (citiesData.length === 0) {
-      return null
-    }
-
-    const initialDist = PRESSURE_DIST_RANGES.reduce((dist, pressureDistRange) => {
-      dist[pressureDistRange.label] = 0
-      return dist
-    }, {})
-
-    return citiesData.reduce((dist, cityData) => {
-      const pressureRangeLabel = getRangeLabel(cityData.weather.pressure_mb, PRESSURE_DIST_RANGES)
-      dist[pressureRangeLabel]++
-      return dist
-    }, initialDist)
-  }
+  (citiesData) => (
+    citiesData.map((cityData) => ({ name: cityData.name, value: cityData.weather.pressure_mb }))
+      .sort((c1, c2) => c1.value - c2.value)
+  )
 )

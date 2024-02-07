@@ -3,7 +3,7 @@ import { nicenessDistributionSelector } from "../../../cities-data/selectors.js"
 import { Cell, LabelList, Legend, Pie, PieChart, Tooltip } from "recharts";
 import { WEATHER_ATTRIBUTES } from "../../../cities-data/const.js";
 
-export const NicenessChart = () => {
+export const NicenessDistributionChart = () => {
   const nicenessDistribution = useSelector(nicenessDistributionSelector)
   if (nicenessDistribution === null) {
     return null
@@ -14,7 +14,7 @@ export const NicenessChart = () => {
   )
 
   const tooltipFormatter = (value, name) => [`${value} cities (${nicenessDistribution[name].percent}%)`, `${WEATHER_ATTRIBUTES[name].text}`]
-  const labelListFormatter = (value) => `${WEATHER_ATTRIBUTES[value].emoji}`
+  const labelListFormatter = (value) => nicenessDistribution[value].count > 0 ? `${WEATHER_ATTRIBUTES[value].emoji}` : ''
 
   const legendFormatter = (value) => `${WEATHER_ATTRIBUTES[value].text}`
 
