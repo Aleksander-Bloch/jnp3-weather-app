@@ -43,12 +43,6 @@ export const getWeatherNiceness = (precip_mm, temp_c) => {
   }
 }
 
-export const getRangeLabel = (value, distRanges) => (
-  distRanges.reduce((label, distRange) => (
-    value >= distRange.range[0] && value <= distRange.range[1] ? distRange.label : label
-  ), '')
-)
-
 export const createDataForCitiesWithinBounds = (bounds) => (
   from(requestDataForCitiesWithinBounds(bounds)).pipe(
     map((response) => response.data.elements

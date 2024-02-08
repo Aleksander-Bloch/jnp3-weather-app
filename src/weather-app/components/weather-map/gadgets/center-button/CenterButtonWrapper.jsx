@@ -17,7 +17,7 @@ export const CenterButtonWrapper = styled.button`
     width: ${({ theme }) => theme.dims.centerButton.width};
     height: ${({ theme }) => theme.dims.centerButton.height};
 
-    font-size: ${({theme}) => theme.fonts.centerButton.fontSize};
+    font-size: ${({ theme }) => theme.fonts.centerButton.fontSize};
 
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};

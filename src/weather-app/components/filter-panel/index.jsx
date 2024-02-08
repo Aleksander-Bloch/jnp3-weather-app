@@ -16,7 +16,7 @@ export const FilterPanel = () => {
         <CityNameFilterWrapper>
           <label>
             City Name: <br/>
-            <input type="text" value={cityName}
+            <input type="text" name="cityName" value={cityName}
                    onChange={(e) => dispatch(updateFilters({ cityName: e.target.value, minPopulation }))}/>
           </label>
         </CityNameFilterWrapper>

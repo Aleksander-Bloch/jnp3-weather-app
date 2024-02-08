@@ -28,4 +28,14 @@ export const WeatherAppWrapper = styled.main`
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: 60vh minmax(200px, auto) repeat(2, minmax(300px, auto));
     }
+    @media (max-width: 512px) {
+        grid-template-areas:
+            "map"
+            "filter"
+            "n-chart"
+            "t-chart"
+            "p-chart";
+        grid-template-columns: 1fr;
+        grid-template-rows: 60vh repeat(2, minmax(200px, auto)) repeat(2, minmax(300px, auto));
+    }
 `

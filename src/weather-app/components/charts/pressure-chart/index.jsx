@@ -26,7 +26,7 @@ export const PressureChart = () => {
   return (
     <PressureChartWrapper>
       <ResponsiveContainer>
-        <AreaChart data={pressureDistribution} margin={{top: 20, right: 20, bottom: 20, left: 20}}>
+        <AreaChart data={pressureDistribution} margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
           <CartesianGrid strokeDasharray="3 3"/>
           <XAxis dataKey="name" angle={-90} tickMargin={30} height={100}
                  label={{ value: "City Name", position: 'insideBottomRight' }} interval={"preserveStartEnd"}/>

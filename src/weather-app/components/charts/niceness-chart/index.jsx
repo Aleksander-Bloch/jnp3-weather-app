@@ -25,14 +25,11 @@ export const NicenessChart = () => {
   const tooltipFormatter = (value, name) => [`${value} cities (${nicenessDistribution[name].percent}%)`, `${WEATHER_ATTRIBUTES[name].text}`]
   const labelListFormatter = (value) => nicenessDistribution[value].count > 0 ? `${WEATHER_ATTRIBUTES[value].emoji}` : ''
 
-  // const legendFormatter = (value) => `${WEATHER_ATTRIBUTES[value].text}`
-
   return (
     <NicenessChartWrapper>
       <ResponsiveContainer>
-        <PieChart>
+        <PieChart margin={{ top: 20, right: 20, bottom: 20, left: 20 }}>
           <Tooltip formatter={tooltipFormatter}/>
-          {/*<Legend formatter={legendFormatter} align="left" verticalAlign="middle" layout="vertical"/>*/}
           <Pie data={nicenessPieData} dataKey="count" nameKey="niceness" label>
             {
               nicenessPieData.map((entry) => (

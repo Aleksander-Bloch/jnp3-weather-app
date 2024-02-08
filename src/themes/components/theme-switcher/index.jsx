@@ -8,7 +8,6 @@ import { ThemeSwitcherWrapper } from "./ThemeSwitcherWrapper.jsx";
 export const ThemeSwitcher = () => {
   const currentTheme = useSelector(currentThemeSelector)
   const dispatch = useDispatch()
-  console.log(currentTheme)
   const nextTheme = currentTheme === LIGHT_THEME ? DARK_THEME : LIGHT_THEME
 
   return (

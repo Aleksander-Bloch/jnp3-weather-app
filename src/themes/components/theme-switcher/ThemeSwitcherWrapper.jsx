@@ -9,11 +9,11 @@ export const ThemeSwitcherWrapper = styled.button`
     padding-bottom: 3px;
     cursor: pointer;
 
-    width: ${({theme}) => theme.dims.themeSwitcher.width};
-    height: ${({theme}) => theme.dims.themeSwitcher.height};
-    
+    width: ${({ theme }) => theme.dims.themeSwitcher.width};
+    height: ${({ theme }) => theme.dims.themeSwitcher.height};
+
     font-size: ${({ theme }) => theme.fonts.themeSwitcher.fontSize};
-    
+
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
     border: 1px dashed ${({ theme }) => theme.colors.border};

@@ -53,7 +53,6 @@ export const nicenessDistributionSelector = createSelector(
     const cumulativeCount = citiesData.length
     if (cumulativeCount !== 0) {
       Object.keys(nicenessDistribution).forEach((key) => {
-        console.log(nicenessDistribution[key], cumulativeCount)
         nicenessDistribution[key].percent = nicenessDistribution[key].count * 100 / cumulativeCount
       })
     }
