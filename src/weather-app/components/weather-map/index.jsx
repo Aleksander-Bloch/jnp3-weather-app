@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { ChangeView } from "./gadgets/ChangeView.jsx";
 import { filteredCitiesDataSelector, isDataLoadingSelector } from "../../cities-data/selectors.js";
 import { CenterButton } from "./gadgets/center-button/index.jsx";
-import { Spinner } from "./gadgets/Spinner.jsx";
+import { Spinner } from "./gadgets/spinner/index.jsx";
 import { EmojiMarker } from "./markers/EmojiMarker.jsx";
 import { WeatherIconMarker } from "./markers/WeatherIconMarker.jsx";
 import { WeatherMapWrapper } from "./WeatherMapWrapper.jsx";

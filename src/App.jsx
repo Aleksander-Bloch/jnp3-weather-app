@@ -1,4 +1,3 @@
-import './App.css'
 import { WeatherApp } from "./weather-app/index.jsx";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./global-styles.js";

@@ -1,16 +1,25 @@
 import styled from "styled-components";
 
 export const CenterButtonWrapper = styled.button`
-    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
     bottom: 10px;
     left: 10px;
     z-index: 400;
-    position: absolute;
-    width: 60px;
-    height: 60px;
-    font-size: 1.5rem;
-    border: 1px dashed grey;
-    background-color: white;
+
+    border-radius: 50%;
     cursor: pointer;
-    box-shadow: 1px 1px 5px grey;
+    padding-bottom: 5px;
+
+    width: ${({ theme }) => theme.dims.centerButton.width};
+    height: ${({ theme }) => theme.dims.centerButton.height};
+
+    font-size: ${({theme}) => theme.fonts.centerButton.fontSize};
+
+    background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.text};
+    border: 1px dashed ${({ theme }) => theme.colors.border};
 `

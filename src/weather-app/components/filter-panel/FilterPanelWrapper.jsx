@@ -7,8 +7,9 @@ export const FilterPanelWrapper = styled.div`
     align-items: center;
     padding: 2rem;
     margin: 1rem;
-    background-color: #f5f5f5;
     border-radius: 10px;
-    box-shadow: 2px 2px 5px #969696;
-    font-family: 'Protest Riot', sans-serif;
+    
+    font-weight: ${({ theme }) => theme.fonts.filterPanel.fontWeight};
+    background-color: ${({ theme }) => theme.colors.filterPanel.background};
+    border: 1px solid ${({ theme }) => theme.colors.border};
 `

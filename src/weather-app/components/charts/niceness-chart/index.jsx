@@ -1,13 +1,21 @@
 import { useSelector } from "react-redux";
 import { nicenessDistributionSelector } from "../../../cities-data/selectors.js";
-import { Cell, LabelList, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import { Cell, LabelList, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import { WEATHER_ATTRIBUTES } from "../../../cities-data/const.js";
 import { NicenessChartWrapper } from "./NicenessChartWrapper.jsx";
+import { NicenessChartNotAvailableWrapper } from "./NicenessChartNotAvailableWrapper.jsx";
+import { useContext } from "react";
+import { ThemeContext } from "styled-components";
 
 export const NicenessChart = () => {
+  const theme = useContext(ThemeContext)
   const nicenessDistribution = useSelector(nicenessDistributionSelector)
   if (nicenessDistribution === null) {
-    return null
+    return (
+      <NicenessChartNotAvailableWrapper>
+        NICENESS CHART NOT AVAILABLE
+      </NicenessChartNotAvailableWrapper>
+    )
   }
 
   const nicenessPieData = Object.entries(nicenessDistribution).map(
@@ -28,7 +36,7 @@ export const NicenessChart = () => {
           <Pie data={nicenessPieData} dataKey="count" nameKey="niceness" label>
             {
               nicenessPieData.map((entry) => (
-                <Cell key={entry.niceness} fill={WEATHER_ATTRIBUTES[entry.niceness].color}/>
+                <Cell key={entry.niceness} fill={theme.colors.nChart[entry.niceness]}/>
               ))
             }
             <LabelList dataKey="niceness" formatter={labelListFormatter}/>

@@ -5,5 +5,8 @@ export const FooterWrapper = styled.footer`
     justify-content: space-around;
     align-items: center;
     padding: 1rem;
-    background-color: papayawhip;
+
+    border-top: 1px solid ${({ theme }) => theme.colors.border};
+    font-size: ${({ theme }) => theme.fonts.footer.fontSize};
+    background-color: ${({ theme }) => theme.colors.footer.background};
 `

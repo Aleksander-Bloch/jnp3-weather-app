@@ -59,7 +59,7 @@ export const createDataForCitiesWithinBounds = (bounds) => (
         id: city.id,
         lat: city.lat,
         lon: city.lon,
-        name: city.tags.name,
+        name: city.tags['name:en'] ?? city.tags.name,
         population: Number(city.tags.population)
       }))
     ),
