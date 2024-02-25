@@ -3,8 +3,6 @@ import {
   MAX_CITIES,
   NICE_TEMP_RANGE,
   OVERPASS_API_URL,
-  WEATHER_API_KEY,
-  WEATHER_API_URL,
   WEATHER_NICE,
   WEATHER_NOT_NICE,
   WEATHER_PASSABLE
@@ -97,7 +95,7 @@ const updateCityDataWithWeatherData = (city) => (
 )
 
 const requestWeatherDataForGeolocation = (lat, lon) => (
-  axios.get(`${WEATHER_API_URL}?q=${lat},${lon}&key=${WEATHER_API_KEY}`)
+  axios.get(`/.netlify/functions/weather-data/?lat=${lat}&lon=${lon}`)
 )
 
 const isWeatherNice = (precip_mm, temp_c) => (
